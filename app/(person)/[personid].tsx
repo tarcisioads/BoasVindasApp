@@ -14,8 +14,6 @@ const Page = () => {
   const messages = useQuery(api.messages.get, { personId: personid as Id<'persons'> }) || [];
   const [user, setUser] = useState<string | null>(null);
   const listRef = useRef<FlatList>(null);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [uploading, setUploading] = useState(false);
   const convex = useConvex();
   const navigation = useNavigation();
 
