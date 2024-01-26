@@ -16,4 +16,16 @@ export default defineSchema({
     person_id: v.id('persons'),
     user: v.string(),
   }),
+  users : defineTable({
+    name: v.string(),
+    password: v.string(),
+    phone: v.string(),
+  }),
+  groups: defineTable({
+    name: v.string(),
+    address: v.string(),
+    address_number: v.string(),
+    neighborhood: v.string(),
+    users: v.array(v.id('users')),
+  })
 });

@@ -46,6 +46,28 @@ export default function RootLayoutNav() {
             ),
           }}
         />
+        <Stack.Screen
+          name="(user)/list"
+          options={{
+            headerTitle: 'Usuários',
+            presentation: 'modal',
+            headerLeft: () => (
+              <Link href={'/'} asChild>
+                <TouchableOpacity>
+                  <Ionicons name="close-outline" size-={32} color="white" />
+                </TouchableOpacity>
+              </Link>
+            ),
+            headerRight: () => (
+              <Link href={'/(user)/create'} asChild>
+                <TouchableOpacity>
+                  <Ionicons name="add" size={32} color="white" />
+                </TouchableOpacity>
+              </Link>
+            ),
+ 
+          }}
+        />
       </Stack>
     </ConvexProvider>
   );
