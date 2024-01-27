@@ -19,7 +19,6 @@ const Page = () => {
   useEffect(() => {
     const loadUser = async () => {
       const UserInfo = await convex.query(api.users.getUser, { id: userid as Id<'users'> });
-      console.log(UserInfo);
       navigation.setOptions({ headerTitle: UserInfo!.name });
     };
     loadUser();

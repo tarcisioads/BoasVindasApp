@@ -12,7 +12,7 @@ const Page = () => {
   const [newMessage, setNewMessage] = useState('');
   const addMessage = useMutation(api.messages.sendMessage);
   const messages = useQuery(api.messages.get, { personId: personid as Id<'persons'> }) || [];
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<string| null>(null);
   const listRef = useRef<FlatList>(null);
   const convex = useConvex();
   const navigation = useNavigation();
@@ -21,7 +21,6 @@ const Page = () => {
   useEffect(() => {
     const loadPerson = async () => {
       const PersonInfo = await convex.query(api.persons.getPerson, { id: personid as Id<'persons'> });
-      console.log(PersonInfo);
       navigation.setOptions({ headerTitle: PersonInfo!.name });
     };
     loadPerson();
@@ -31,7 +30,8 @@ const Page = () => {
   useEffect(() => {
     const loadUser = async () => {
       const user = await AsyncStorage.getItem('user');
-      setUser(user);
+      const json = JSON.parse(user || '{name: "Anonymous"}');
+      setUser(json.name);
     };
 
     loadUser();
