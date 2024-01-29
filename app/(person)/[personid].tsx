@@ -1,6 +1,6 @@
 import { View, Text, SafeAreaView, TouchableOpacity, TextInput, StyleSheet, FlatList, ListRenderItem, KeyboardAvoidingView, Platform, Image, Keyboard, ActivityIndicator } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
+import { useLocalSearchParams, useNavigation, Link } from 'expo-router';
 import { useConvex, useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { Doc, Id } from '@/convex/_generated/dataModel';
@@ -21,7 +21,19 @@ const Page = () => {
   useEffect(() => {
     const loadPerson = async () => {
       const PersonInfo = await convex.query(api.persons.getPerson, { id: personid as Id<'persons'> });
-      navigation.setOptions({ headerTitle: PersonInfo!.name });
+      navigation.setOptions({ 
+        headerTitle: PersonInfo!.name,
+        headerRight: () => (
+          <Link href={{ pathname: '/(person)/edit/[personid]', params: { personid: PersonInfo!._id } }} asChild>
+            <TouchableOpacity>
+              <Ionicons name="pencil" size={32} color="white" />
+            </TouchableOpacity>
+          </Link>
+        ),
+
+
+      });
+
     };
     loadPerson();
   }, [personid]);
@@ -31,7 +43,7 @@ const Page = () => {
     const loadUser = async () => {
       const user = await AsyncStorage.getItem('user');
       const json = JSON.parse(user || '{name: "Anonymous"}');
-      setUser(json.name);
+      setUser(json!.name);
     };
 
     loadUser();

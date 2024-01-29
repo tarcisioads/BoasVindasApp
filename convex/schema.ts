@@ -26,6 +26,5 @@ export default defineSchema({
     address: v.string(),
     address_number: v.string(),
     neighborhood: v.string(),
-    users: v.array(v.id('users')),
   })
 });

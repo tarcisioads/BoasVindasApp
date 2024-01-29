@@ -25,3 +25,14 @@ export const create = mutation({
     await db.insert('persons', args)
   }
 });
+
+export const edit = mutation({
+    
+  args: {  id: v.id('persons'), modified_at: v.string(), name: v.string(), neighborhood: v.string(), phone: v.string(), service_at: v.string()}, 
+
+  handler: async ({db}, args) => {
+    const id = args.id
+    const obj = {modified_at: args.modified_at, name: args.name, neighborhood: args.neighborhood, phone: args.phone, service_at: args.service_at}
+    await db.replace(id, obj)
+  }
+});

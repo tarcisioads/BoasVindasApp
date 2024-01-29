@@ -6,35 +6,40 @@ import { Id } from '@/convex/_generated/dataModel';
 import { useConvex, useMutation, useQuery } from 'convex/react';
 
 const Page = () => {
-  const { userid } = useLocalSearchParams();
+  const { personid } = useLocalSearchParams();
   const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
+  const [neighborhood, setNeighborhood] = useState('');
   const [phone, setPhone] = useState('');
-  const editUser = useMutation(api.users.edit);
+  const [service_at, setService_at] = useState('');
+ 
+  const editPerson = useMutation(api.persons.edit);
   const router = useRouter();
   const convex = useConvex();
   const navigation = useNavigation();
 
   // Load group name and set header title
   useEffect(() => {
-    const loadUser = async () => {
-      const UserInfo = await convex.query(api.users.getUser, { id: userid as Id<'users'> });
-      navigation.setOptions({ headerTitle: UserInfo!.name });
-      setName(UserInfo!.name);
-      setPassword(UserInfo!.password);
-      setPhone(UserInfo!.phone);
+    const loadPerson = async () => {
+      const PersonInfo = await convex.query(api.persons.getPerson, { id: personid as Id<'persons'> });
+      navigation.setOptions({ headerTitle: PersonInfo!.name });
+      setName(PersonInfo!.name);
+      setNeighborhood(PersonInfo!.neighborhood);
+      setPhone(PersonInfo!.phone);
+      setService_at(PersonInfo!.service_at);
     };
-    loadUser();
-  }, [userid]);
+    loadPerson();
+  }, [personid]);
 
 
   // Create a new group with Convex mutation
-  const onEditUser= async () => {
-    await editUser({
-      id: userid as Id<'users'>,
+  const onEditPerson= async () => {
+    await editPerson({
+      id: personid as Id<'persons'>,
       name,
-      password: password,
+      neighborhood: neighborhood,
       phone: phone,
+      service_at: service_at,
+      modified_at: Date.now().toString(),
     });
     router.back();
   };
@@ -45,9 +50,12 @@ const Page = () => {
       <TextInput style={styles.textInput} value={name} onChangeText={setName} />
       <Text style={styles.label}>Celular</Text>
       <TextInput style={styles.textInput} value={phone} onChangeText={setPhone} />
-      <Text style={styles.label}>Senha</Text>
-      <TextInput style={styles.textInput} value={password} onChangeText={setPassword} secureTextEntry={true} />
-      <TouchableOpacity style={styles.button} onPress={onEditUser}>
+      <Text style={styles.label}>Bairro</Text>
+      <TextInput style={styles.textInput} value={neighborhood} onChangeText={setNeighborhood} />
+      <Text style={styles.label}>Data do Culto</Text>
+      <TextInput style={styles.textInput} value={service_at} onChangeText={setService_at} />
+
+      <TouchableOpacity style={styles.button} onPress={onEditPerson}>
         <Text style={styles.buttonText}>Salvar</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>

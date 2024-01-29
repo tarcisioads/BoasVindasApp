@@ -14,11 +14,6 @@ const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
 export default function RootLayoutNav() {
   const navigation = useNavigation();
 
-  const logout = async () => {
-    await AsyncStorage.removeItem('user');
-    navigation.navigate('login'); 
-  };
-
   return (
     <ConvexProvider client={convex}>
       <Stack screenOptions={{
@@ -62,15 +57,22 @@ export default function RootLayoutNav() {
                       <Ionicons name="add" size={32} color="white" />
                     </TouchableOpacity>
                   </Link>
-                  <TouchableOpacity onPress={logout}>
-                    <Ionicons name="person" size={32} color="white" />
-                  </TouchableOpacity>
+                  <Link href={'/profile'} asChild>
+                    <TouchableOpacity>
+                      <Ionicons name="person" size={32} color="white" />
+                    </TouchableOpacity>
+                  </Link>
                 
                 </View>
               ),
             }}
           />
-          <Stack.Screen name="(persons)/[personid]" options={{ headerTitle: 'Test'}} />
+          <Stack.Screen 
+            name="(person)/[personid]" 
+            options={{ 
+              headerTitle: 'Test',
+            }} 
+          />
           <Stack.Screen
             name="(modal)/create"
             options={{
