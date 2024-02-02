@@ -3,16 +3,13 @@ import { ConvexProvider, ConvexReactClient } from 'convex/react';
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import React  from 'react';
 
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
   unsavedChangesWarning: false,
 });
 
 export default function RootLayoutNav() {
-  const navigation = useNavigation();
 
   return (
     <ConvexProvider client={convex}>
@@ -41,15 +38,6 @@ export default function RootLayoutNav() {
             name="index"
             options={{
               headerTitle: 'Visitantes',
-              headerLeft: () => (
-                 <View style={{flexDirection: 'row', gap: 10, alignItems: 'center'}}> 
-                  <Link href={'/(user)/list'} asChild>
-                    <TouchableOpacity>
-                      <Ionicons name="people" size={32} color="white" />
-                    </TouchableOpacity>
-                  </Link>
-                </View>
-              ),
               headerRight: () => (
                 <View style={{flexDirection: 'row', gap: 10, alignItems: 'center'}}> 
                   <Link href={'/(modal)/create'} asChild>
@@ -59,7 +47,7 @@ export default function RootLayoutNav() {
                   </Link>
                   <Link href={'/profile'} asChild>
                     <TouchableOpacity>
-                      <Ionicons name="person" size={32} color="white" />
+                      <Ionicons name="ellipsis-vertical-outline" size={32} color="white" />
                     </TouchableOpacity>
                   </Link>
                 
