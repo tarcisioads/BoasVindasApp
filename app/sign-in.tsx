@@ -1,55 +1,36 @@
 import { View, Text, KeyboardAvoidingView, Platform, StyleSheet, TextInput, TouchableOpacity, BackHandler } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { useQuery } from 'convex/react'
-import { api } from '../convex/_generated/api';
+import { useSession } from './ctx'
+import { router } from 'expo-router'
 
 const Page = () => {
   const [name, setName] = useState('');
   const [msg, setMsg] = useState('');
   const navigation = useNavigation();
-  const users = useQuery(api.users.get) || [];
+  const { signIn, session } = useSession();
 
-  useEffect(() => {
-    const loadUser = async () => {
-      setMsg('')
-      const user = await AsyncStorage.getItem('user');
-      if (user) {
-        setName(user.name);
-        navigation.navigate('index');
-      }
 
-    };
-    loadUser();
-  }, []);
-  
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      // Handle back button press (e.g., display a confirmation dialog)
-      return true; // Prevent default back action
-    });
-    return () => backHandler.remove();
-  }, []);
-
-  // Safe the user name to async storage
+   // Safe the user name to async storage
   const setUser = async () => {
-    const user = users.find((u) => u.name.toLowerCase() === name.toLowerCase()); 
-    if (user) {
-      delete user.password;
-    } else {
-      setMsg('Usuário não encontrado');
-      return;
+    signIn(name);
+    if (!session) {
+        setMsg('Usuário não encontrado');
+        return;
     }
-    const userName = `${user.name}`;
-    const json = JSON.stringify(user);
-    await AsyncStorage.setItem('user', json);
-    setName(userName);
-    navigation.navigate('index');
+
+    router.replace('/')
+
   };
   return (
     <View style={{flex: 1}}>
-      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={100}>
+     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={100}>
+
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Boas Vindas</Text>
+          <Text style={styles.subtitle}>Bola de Neve</Text>
+          <Text style={styles.subtitle}>Vila Matilde</Text>
+        </View>
         <Text style={styles.label}>Nome</Text>
         <TextInput style={styles.textInput} value={name} onChangeText={setName} />
         <TouchableOpacity style={styles.button} onPress={setUser}>
@@ -66,6 +47,24 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: '#F8F5EA'
+  },
+  titleContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  title: {
+    marginTop: 35,
+    marginVertical: 10,
+    fontSize: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    fontSize: 20,
+    marginVertical: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   label: {
     marginVertical: 10,

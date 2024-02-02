@@ -1,28 +1,13 @@
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useEffect } from 'react';
 import { useQuery } from 'convex/react'
-import { api } from '../convex/_generated/api';
+import { api } from '@/convex/_generated/api';
 import { Link } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-
 
 const Page = () => {
-  const navigation = useNavigation();
   const persons = useQuery(api.persons.get) || [];
 
-  // Check if the user has a name, otherwise show modal
-  useEffect(() => {
-    const loadUser = async () => {
-      const user = await AsyncStorage.getItem('user');
-      if (!user) {
-        navigation.navigate('login'); 
-      }
-    };
-    loadUser();
-  }, []);
-
-
+ 
   return (
     <View style={{flex: 1}}>
       <ScrollView style={styles.container}>

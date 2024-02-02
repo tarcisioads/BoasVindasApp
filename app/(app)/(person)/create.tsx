@@ -1,4 +1,3 @@
-
 import { Text, KeyboardAvoidingView, Platform, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { useMutation } from 'convex/react';

@@ -1,7 +1,7 @@
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useQuery } from 'convex/react'
-import { api } from '../../convex/_generated/api';
+import { api } from '@/convex/_generated/api';
 import { Link } from 'expo-router';
 
 const Page = () => {
