@@ -30,21 +30,6 @@ export default function AppLayout() {
         headerTintColor: '#fff',
       }}>
           <Stack.Screen 
-            name="login" 
-            options={{ 
-              headerTitle: 'Login',
-              presentation: 'modal',
-              gestureEnabled: false,
-              headerLeft: () => (
-                <Link href={'/'} asChild>
-                  <TouchableOpacity>
-                    <Ionicons name="close-outline" size-={32} color="white" />
-                  </TouchableOpacity>
-                </Link>
-              ),
-            }} 
-          />
-          <Stack.Screen 
             name="index"
             options={{
               headerTitle: 'Visitantes',

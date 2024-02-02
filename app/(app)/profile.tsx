@@ -15,11 +15,11 @@ const UserProfileScreen = () => {
   };
 
   const handleUsers = async () => {
-    navigation.navigate('/(user)/list');
+    navigation.navigate('(user)/list');
   };
 
   const handleGroups = async () => {
-    navigation.navigate('/(group)/list'); 
+    navigation.navigate('(group)/list'); 
   }
 
 
