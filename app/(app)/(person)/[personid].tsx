@@ -4,8 +4,8 @@ import { useLocalSearchParams, useNavigation, Link } from 'expo-router';
 import { useConvex, useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { Doc, Id } from '@/convex/_generated/dataModel';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
+import { useSession } from '../../ctx'
 
 const Page = () => {
   const { personid } = useLocalSearchParams();
@@ -16,6 +16,7 @@ const Page = () => {
   const listRef = useRef<FlatList>(null);
   const convex = useConvex();
   const navigation = useNavigation();
+  const { session, isLoading } = useSession();
 
   // Load group name and set header title
   useEffect(() => {
@@ -41,8 +42,7 @@ const Page = () => {
   // Load user from async storage
   useEffect(() => {
     const loadUser = async () => {
-      const user = await AsyncStorage.getItem('user');
-      const json = JSON.parse(user || '{name: "Anonymous"}');
+      const json = JSON.parse(session || '{name: "Anonymous"}');
       setUser(json!.name);
     };
 
@@ -78,8 +78,8 @@ const Page = () => {
     return (
       <View style={[styles.messageContainer, isUserMessage ? styles.userMessageContainer : styles.otherMessageContainer]}>
         {item.content !== '' && <Text style={[styles.messageText, isUserMessage ? styles.userMessageText : null]}>{item.content}</Text>}
-        <Text style={styles.timestamp}>
-          {new Date(item._creationTime).toLocaleTimeString()} - {item.user}
+        <Text style={isUserMessage ? styles.userTimestamp : styles.timestamp}>
+          {new Date(item._creationTime).toLocaleDateString()} {new Date(item._creationTime).toLocaleTimeString()} - {item.user}
         </Text>
       </View>
     );
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     maxWidth: '80%',
   },
   userMessageContainer: {
-    backgroundColor: '#791363',
+    backgroundColor: '#EEA217',
     alignSelf: 'flex-end',
   },
   otherMessageContainer: {
@@ -175,6 +175,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#c7c7c7',
   },
+  userTimestamp: {
+    fontSize: 12,
+    color: '#000',
+  },
+
 });
 
 export default Page;
