@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
+import { Link } from 'expo-router'
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSession } from '../ctx'
@@ -12,10 +12,6 @@ const UserProfileScreen = () => {
 
   const handleLogout = async () => {
     signOut();
-  };
-
-  const handleUsers = async () => {
-    navigation.navigate('(user)/list');
   };
 
   const handleGroups = async () => {
@@ -36,17 +32,20 @@ const UserProfileScreen = () => {
         </View>
         <View style={styles.menu}>
           
+          <Link style={styles.button} href="/(user)/list" asChild> 
+            <Pressable>
+              <Ionicons name="people-circle-outline" size={32} color="#000" />
+              <Text>Usuários</Text>
+            </Pressable>
+          </Link>
+          
+          <Link style={styles.button} href="/(group)/list" asChild> 
+            <Pressable>
+              <Ionicons name="home" size={32} color="#000" />
+              <Text>Células</Text>
+            </Pressable>
+          </Link>
 
-          <TouchableOpacity style={styles.button} onPress={handleUsers} >
-            <Ionicons name="people-circle-outline" size={32} color="#000" />
-            <Text>Usuários</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.button} onPress={handleGroups} >
-            <Ionicons name="home" size={32} color="#000" />
-            <Text>Celulas</Text>
-          </TouchableOpacity>
- 
         </View>
       </ScrollView>  
     </View>

@@ -60,14 +60,6 @@ export default function AppLayout() {
             name="(person)/create"
             options={{
               headerTitle: 'Novo Visitante',
-              presentation: 'modal',
-              headerLeft: () => (
-                <Link href={'/'} asChild>
-                  <TouchableOpacity>
-                    <Ionicons name="close-outline" size-={32} color="white" />
-                  </TouchableOpacity>
-                </Link>
-              ),
             }}
           />
           <Stack.Screen
@@ -82,6 +74,12 @@ export default function AppLayout() {
                 </Link>
               ),
 
+            }}
+          />
+          <Stack.Screen
+            name="(user)/create"
+            options={{
+              headerTitle: 'Novo Usuário',
             }}
           />
           
