@@ -82,6 +82,26 @@ export default function AppLayout() {
               headerTitle: 'Novo Usuário',
             }}
           />
+          <Stack.Screen
+            name="(group)/list"
+            options={{
+              headerTitle: 'Células',
+              headerRight: () => (
+                <Link href={'/(group)/create'} asChild>
+                  <TouchableOpacity>
+                    <Ionicons name="add" size={32} color="white" />
+                  </TouchableOpacity>
+                </Link>
+              ),
+
+            }}
+          />
+          <Stack.Screen
+            name="(group)/create"
+            options={{
+              headerTitle: 'Nova Célula',
+            }}
+          />
           
       </Stack>
     </ConvexProvider>

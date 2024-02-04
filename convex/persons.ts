@@ -19,7 +19,7 @@ export const getPerson = query({
 });
 
 export const create = mutation({
-  args: { modified_at: v.string(), name: v.string(), neighborhood: v.string(), phone: v.string(), service_at: v.string()}, 
+  args: { modified_at: v.string(), name: v.string(), neighborhood: v.string(), phone: v.string(), service_at: v.string(), group_id: v.optional(v.id('groups'))}, 
     
   handler: async ({db}, args) => {
     await db.insert('persons', args)
@@ -28,11 +28,11 @@ export const create = mutation({
 
 export const edit = mutation({
     
-  args: {  id: v.id('persons'), modified_at: v.string(), name: v.string(), neighborhood: v.string(), phone: v.string(), service_at: v.string()}, 
+  args: {  id: v.id('persons'), modified_at: v.string(), name: v.string(), neighborhood: v.string(), phone: v.string(), service_at: v.string(), group_id: v.optional(v.id('groups'))}, 
 
   handler: async ({db}, args) => {
     const id = args.id
-    const obj = {modified_at: args.modified_at, name: args.name, neighborhood: args.neighborhood, phone: args.phone, service_at: args.service_at}
+    const obj = {modified_at: args.modified_at, name: args.name, neighborhood: args.neighborhood, phone: args.phone, service_at: args.service_at, group_id: args.group_id}
     await db.replace(id, obj)
   }
 });

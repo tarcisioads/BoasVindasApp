@@ -7,16 +7,11 @@ import { useSession } from '../ctx'
 
 const UserProfileScreen = () => {
   const [user, setUser] = useState({ name: "" }); // Assuming initial logged-in state
-  const navigation = useNavigation();
   const { signOut, session } = useSession();
 
   const handleLogout = async () => {
     signOut();
   };
-
-  const handleGroups = async () => {
-    navigation.navigate('(group)/list'); 
-  }
 
 
   return (

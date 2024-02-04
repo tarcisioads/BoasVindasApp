@@ -4,48 +4,40 @@ import { api } from '@/convex/_generated/api';
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import { Id } from '@/convex/_generated/dataModel';
 import { useConvex, useMutation, useQuery } from 'convex/react';
-import {Picker} from '@react-native-picker/picker';
 
 const Page = () => {
-  const { personid } = useLocalSearchParams();
+  const { groupid } = useLocalSearchParams();
   const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [address_number, setAddress_number] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
-  const [phone, setPhone] = useState('');
-  const [service_at, setService_at] = useState('');
-  const [group_id, setGroup_id] = useState('');
-
- 
-  const editPerson = useMutation(api.persons.edit);
-  const groups = useQuery(api.groups.get) || [];
+  const editGroup = useMutation(api.groups.edit);
   const router = useRouter();
   const convex = useConvex();
   const navigation = useNavigation();
 
   // Load group name and set header title
   useEffect(() => {
-    const loadPerson = async () => {
-      const PersonInfo = await convex.query(api.persons.getPerson, { id: personid as Id<'persons'> });
-      navigation.setOptions({ headerTitle: PersonInfo!.name });
-      setName(PersonInfo!.name);
-      setNeighborhood(PersonInfo!.neighborhood);
-      setPhone(PersonInfo!.phone);
-      setService_at(PersonInfo!.service_at);
-      setGroup_id(PersonInfo!.group_id as string);
+    const loadGroup = async () => {
+      const GroupInfo = await convex.query(api.groups.getGroup, { id: groupid as Id<'groups'> });
+      navigation.setOptions({ headerTitle: GroupInfo!.name });
+      setName(GroupInfo!.name);
+      setAddress(GroupInfo!.address);
+      setAddress_number(GroupInfo!.address_number);
+      setNeighborhood(GroupInfo!.neighborhood);
     };
-    loadPerson();
-  }, [personid]);
+    loadGroup();
+  }, [groupid]);
 
 
   // Create a new group with Convex mutation
-  const onEditPerson= async () => {
-    await editPerson({
-      id: personid as Id<'persons'>,
+  const onEditGroup= async () => {
+    await editGroup({
+      id: groupid as Id<'groups'>,
       name,
+      address: address,
+      address_number: address_number,
       neighborhood: neighborhood,
-      phone: phone,
-      service_at: service_at,
-      modified_at: Date.now().toString(),
-      group_id: group_id as Id<'groups'>,
     });
     router.back();
   };
@@ -54,24 +46,14 @@ const Page = () => {
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={100}>
       <Text style={styles.label}>Nome</Text>
       <TextInput style={styles.textInput} value={name} onChangeText={setName} />
-      <Text style={styles.label}>Celular</Text>
-      <TextInput style={styles.textInput} value={phone} onChangeText={setPhone} />
+      <Text style={styles.label}>Endereço</Text>
+      <TextInput style={styles.textInput} value={address} onChangeText={setAddress} />
+      <Text style={styles.label}>Nr. Endereço</Text>
+      <TextInput style={styles.textInput} value={address_number} onChangeText={setAddress_number} />
       <Text style={styles.label}>Bairro</Text>
       <TextInput style={styles.textInput} value={neighborhood} onChangeText={setNeighborhood} />
-      <Text style={styles.label}>Data do Culto</Text>
-      <TextInput style={styles.textInput} value={service_at} onChangeText={setService_at} />
-      <Text style={styles.label}>Célula</Text>
-      <Picker 
-        selectedValue={group_id}
-        onValueChange={(itemValue, itemIndex) => setGroup_id(itemValue)}>
 
-        <Picker.Item label="Escolha uma celula" value={null} /> 
-        {groups.map((group) => ( 
-          <Picker.Item label={group.name} value={group._id} /> 
-        ))
-        }
-      </Picker> 
-      <TouchableOpacity style={styles.button} onPress={onEditPerson}>
+      <TouchableOpacity style={styles.button} onPress={onEditGroup}>
         <Text style={styles.buttonText}>Salvar</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>

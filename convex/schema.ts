@@ -4,18 +4,6 @@ import { v } from "convex/values";
 export default defineSchema({
   // Other tables here...
 
-  persons: defineTable({
-    modified_at: v.string(),
-    name: v.string(),
-    neighborhood: v.string(),
-    phone: v.string(),
-    service_at: v.string(),
-  }),
-  messages: defineTable({
-    content: v.string(),
-    person_id: v.id('persons'),
-    user: v.string(),
-  }),
   users : defineTable({
     name: v.string(),
     password: v.string(),
@@ -26,5 +14,19 @@ export default defineSchema({
     address: v.string(),
     address_number: v.string(),
     neighborhood: v.string(),
-  })
+  }),
+  persons: defineTable({
+    modified_at: v.string(),
+    name: v.string(),
+    neighborhood: v.string(),
+    phone: v.string(),
+    service_at: v.string(),
+    group_id: v.optional(v.id('groups'))
+  }),
+   messages: defineTable({
+    content: v.string(),
+    person_id: v.id('persons'),
+    user: v.string(),
+  }),
+ 
 });
