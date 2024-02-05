@@ -1,14 +1,11 @@
 import { mutation, query } from './_generated/server';
 import { v } from 'convex/values';
+import { Id } from './_generated/dataModel';
 
 export const get = query({
   args: {},
   handler: async (ctx) => {
-    let persons = await ctx.db.query('persons').collect();
-    persons = persons.map((p) => {
-      p.group = ctx.db.get(p.group_id as v.id<'groups'>)
-    })
-    return persons;
+    return await ctx.db.query('persons').collect();
   },
 })
 

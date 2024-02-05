@@ -23,7 +23,7 @@ export default defineSchema({
     service_at: v.string(),
     group_id: v.optional(v.id('groups'))
   }),
-   messages: defineTable({
+  messages: defineTable({
     content: v.string(),
     person_id: v.id('persons'),
     user: v.string(),
