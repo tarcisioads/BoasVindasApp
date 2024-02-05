@@ -4,7 +4,11 @@ import { v } from 'convex/values';
 export const get = query({
   args: {},
   handler: async (ctx) => {
-    return await ctx.db.query('persons').collect();
+    let persons = await ctx.db.query('persons').collect();
+    persons = persons.map((p) => {
+      p.group = ctx.db.get(p.group_id as v.id<'groups'>)
+    })
+    return persons;
   },
 })
 

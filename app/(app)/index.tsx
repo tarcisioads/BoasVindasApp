@@ -17,7 +17,10 @@ const Page = () => {
             <View style={{ flex: 1 }}>
               <Text>{person.name}</Text>
               <Text style={{ color: '#888' }}>{person.phone}</Text>
-              <Text style={{ color: '#888' }}>{person.neighborhood}</Text>
+              <View style={{ flexDirection: 'row', gap: 10 }}>
+                <Text style={{ color: '#888' }}>{person.neighborhood}</Text>
+                <Text style={{ color: '#888' }}>{person.group.nome}</Text>
+              </View>
             </View>
           </TouchableOpacity>
         </Link>
