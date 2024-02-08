@@ -21,6 +21,7 @@ export default defineSchema({
     neighborhood: v.string(),
     phone: v.string(),
     service_at: v.string(),
+    arquived_at: v.optional(v.string()),
     group_id: v.optional(v.id('groups'))
   }),
   messages: defineTable({
@@ -28,5 +29,5 @@ export default defineSchema({
     person_id: v.id('persons'),
     user: v.string(),
   }),
- 
+
 });

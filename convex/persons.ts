@@ -5,9 +5,21 @@ import { Id } from './_generated/dataModel';
 export const get = query({
   args: {},
   handler: async (ctx) => {
-    return await ctx.db.query('persons').collect();
+    return await ctx.db.query('persons')
+      .filter((q) => q.eq(q.field('arquived_at'), undefined))
+      .collect();
   },
 })
+
+export const getArchived = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.query('persons')
+      .filter((q) => q.neq(q.field('arquived_at'), undefined))
+      .collect();
+  },
+})
+
 
 export const getPerson = query({
   args: { id: v.id('persons')},
@@ -37,3 +49,12 @@ export const edit = mutation({
     await db.replace(id, obj)
   }
 });
+
+export const archive = mutation({
+  args: { id: v.id('persons')},
+  handler: async ({db}, args) => {
+    const id = args.id
+    const obj = {arquived_at: new Date().toLocaleString()}
+    await db.patch(id, obj)
+  }
+})

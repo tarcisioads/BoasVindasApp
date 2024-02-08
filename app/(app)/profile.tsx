@@ -41,6 +41,14 @@ const UserProfileScreen = () => {
             </Pressable>
           </Link>
 
+          <Link style={styles.button} href="/(person)/list" asChild> 
+            <Pressable style={ { }}>
+              <Ionicons name="archive" size={32} color="#000" />
+              <Text>Arquivados</Text>
+            </Pressable>
+          </Link>
+
+
         </View>
       </ScrollView>  
     </View>
@@ -67,13 +75,21 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#F8F5EA',
-    alignItems: 'center',
-    gap: 10,
-    justifyContent: 'center',
-    marginBottom: 20,
+    flex: 1, 
+    flexDirection: 'row', 
+    gap: 10, 
+    alignItems: 'center', 
+    backgroundColor: '#fff', 
+    padding: 10, 
+    borderRadius: 10, 
+    marginBottom: 10, 
+    shadowColor: '#000', 
+    shadowOffset: { 
+      width: 0, 
+      height: 1 
+    }, 
+    shadowOpacity: 0.22, 
+    shadowRadius: 2.22  
   }
 
 })

@@ -51,6 +51,20 @@ export default function AppLayout() {
             }}
           />
           <Stack.Screen 
+            name="(person)/list"
+            options={{
+              headerTitle: 'Visitantes Arquivados',
+            }}
+          />
+
+          <Stack.Screen 
+            name="profile"
+            options={{
+              headerTitle: 'Profile',
+            }}
+          />
+ 
+          <Stack.Screen 
             name="(person)/[personid]" 
             options={{ 
               headerTitle: 'Test',

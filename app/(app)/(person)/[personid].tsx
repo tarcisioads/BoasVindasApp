@@ -1,6 +1,6 @@
 import { View, Text, SafeAreaView, TouchableOpacity, TextInput, StyleSheet, FlatList, ListRenderItem, KeyboardAvoidingView, Platform, Image, Keyboard, ActivityIndicator } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocalSearchParams, useNavigation, Link } from 'expo-router';
+import { useLocalSearchParams, useNavigation, Link, useRouter } from 'expo-router';
 import { useConvex, useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { Doc, Id } from '@/convex/_generated/dataModel';
@@ -17,6 +17,17 @@ const Page = () => {
   const convex = useConvex();
   const navigation = useNavigation();
   const { session, isLoading } = useSession();
+  const archivePerson = useMutation(api.persons.archive);
+  const router = useRouter();
+  
+  const handleArchiveItem = async (personid) => {
+    await archivePerson({
+      id: personid as Id<'persons'>,
+    });
+    router.back();
+ 
+  }
+
 
   // Load group name and set header title
   useEffect(() => {
@@ -25,11 +36,16 @@ const Page = () => {
       navigation.setOptions({ 
         headerTitle: PersonInfo!.name,
         headerRight: () => (
-          <Link href={{ pathname: '/(person)/edit/[personid]', params: { personid: PersonInfo!._id } }} asChild>
-            <TouchableOpacity>
-              <Ionicons name="pencil" size={32} color="white" />
+          <View style={{ flexDirection: 'row', gap: 10 }}>
+            <TouchableOpacity onPress={() => handleArchiveItem(PersonInfo!._id)} >
+              <Ionicons name="archive" size={32} color="white" />
             </TouchableOpacity>
-          </Link>
+            <Link href={{ pathname: '/(person)/edit/[personid]', params: { personid: PersonInfo!._id } }} asChild>
+              <TouchableOpacity>
+                <Ionicons name="pencil" size={32} color="white" />
+              </TouchableOpacity>
+            </Link>
+          </View>
         ),
 
 

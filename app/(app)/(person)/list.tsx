@@ -5,18 +5,28 @@ import { api } from '@/convex/_generated/api';
 import { Link } from 'expo-router';
 
 const Page = () => {
-  const persons = useQuery(api.persons.get) || [];
+  const groups = useQuery(api.groups.get) || [];
+  const persons = useQuery(api.persons.getArchived) || [];
+  const data = persons.map(person => (
+    {
+      ...person,
+      group: groups.find(group => (group._id+'' === person.group_id+''))
+    }))
+
 
   return (
     <View style={{flex: 1}}>
       <ScrollView style={styles.container}>
-        {persons.map((person) => ( 
+        {data.map((person) => ( 
           <Link href={{ pathname: '/(person)/[personid]', params: { personid: person._id } }} key={person._id.toString()} asChild>
             <TouchableOpacity style={styles.person}>
               <View style={{ flex: 1 }}>
                 <Text>{person.name}</Text>
                 <Text style={{ color: '#888' }}>{person.phone}</Text>
-                <Text style={{ color: '#888' }}>{person.neighborhood}</Text>
+                <View style={{ flexDirection: 'row', gap: 5 }}>
+                  <Text style={{flex: 1, color: '#888' }}>{person.neighborhood}</Text>
+                  <Text style={person.group?styles.celula:null}>{person.group?'Célula '+person.group!.name:null}</Text>
+                </View>
               </View>
             </TouchableOpacity>
           </Link>

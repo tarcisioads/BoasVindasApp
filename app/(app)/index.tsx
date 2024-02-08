@@ -1,21 +1,19 @@
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, PanResponder } from 'react-native';
 import React, { useEffect } from 'react';
 import { useQuery } from 'convex/react'
 import { api } from '@/convex/_generated/api';
 import { Link } from 'expo-router';
 
 const Page = () => {
-  const persons = useQuery(api.persons.get) || [];
   const groups = useQuery(api.groups.get) || [];
-  const data = persons.map(person => ({
+  const persons = useQuery(api.persons.get) || [];
+  const data = persons.map(person => (
+    {
       ...person,
-      group: groups.filter(group => (group._id === person.group_id))
+      group: groups.find(group => (group._id+'' === person.group_id+''))
     }))
-  console.log(groups)
- 
 
- 
-  return (
+    return (
     <View style={{flex: 1}}>
       <ScrollView style={styles.container}>
       {data.map((person) => ( 
@@ -24,9 +22,10 @@ const Page = () => {
             <View style={{ flex: 1 }}>
               <Text>{person.name}</Text>
               <Text style={{ color: '#888' }}>{person.phone}</Text>
-                <Text style={{ color: '#888' }}>{person.neighborhood}</Text>
-                <Text style={{ color: '#888' }}>{person.group_id}</Text>
-                <Text style={{ color: '#888' }}>{person.group.name}</Text>
+              <View style={{ flexDirection: 'row', gap: 5 }}>
+                <Text style={{flex: 1, color: '#888' }}>{person.neighborhood}</Text>
+                <Text style={person.group?styles.celula:null}>{person.group?'Célula '+person.group!.name:null}</Text>
+              </View>
             </View>
           </TouchableOpacity>
         </Link>
@@ -61,6 +60,13 @@ const styles = StyleSheet.create({
     shadowRadius: 2.22,
     elevation: 3,
   },
+  celula: {
+    color: '#fff', 
+    textAlign: 'right', 
+    backgroundColor: '#EEA217',
+    borderRadius: 5,
+    padding: 2, 
+  }
 
 })
 
