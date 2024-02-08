@@ -22,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.tarpinha.BoasVindasApp"
     },
     "web": {
       "bundler": "metro",
@@ -35,6 +36,14 @@
     "experiments": {
       "typedRoutes": true,
       "tsconfigPaths": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f9b80e1e-ab10-4f38-898a-d72629865184"
+      }
     }
   }
 }
