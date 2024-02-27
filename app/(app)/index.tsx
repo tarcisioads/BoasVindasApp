@@ -26,6 +26,12 @@ const Page = () => {
                 <Text style={{flex: 1, color: '#888' }}>{person.neighborhood}</Text>
                 <Text style={person.group?styles.celula:null}>{person.group?'Célula '+person.group!.name:null}</Text>
               </View>
+              <View style={{ flexDirection: 'row', gap: 5 }}>
+                <Text style={styles.timestamp}>
+                  {new Date(item._creationTime).toLocaleDateString()} {new Date(item._creationTime).toLocaleTimeString()} - {item.user}
+                </Text>
+              </View>
+              <View style={{ flexDirection: 'row', gap: 5 }}>
             </View>
           </TouchableOpacity>
         </Link>
@@ -66,8 +72,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEA217',
     borderRadius: 5,
     padding: 2, 
-  }
-
+  },
+  timestamp: {
+    fontSize: 12,
+    color: '#c7c7c7',
+  },
+ 
 })
 
 
