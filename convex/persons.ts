@@ -53,8 +53,16 @@ export const edit = mutation({
 export const archive = mutation({
   args: { id: v.id('persons')},
   handler: async ({db}, args) => {
+    
     const id = args.id
-    const obj = {arquived_at: new Date().toLocaleString()}
+    const person = await db
+      .query('persons')
+      .filter((q) => q.eq(q.field('_id'), id))
+      .unique();
+
+    const arquived = (person?.arquived_at ? undefined: new Date().toLocaleString());
+ 
+    const obj = {arquived_at: arquived }
     await db.patch(id, obj)
   }
 })

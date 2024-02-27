@@ -1,8 +1,9 @@
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, PanResponder } from 'react-native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useQuery } from 'convex/react'
 import { api } from '@/convex/_generated/api';
 import { Link } from 'expo-router';
+import { timeAgo } from '../util';
 
 const Page = () => {
   const groups = useQuery(api.groups.get) || [];
@@ -21,17 +22,16 @@ const Page = () => {
           <TouchableOpacity style={styles.person}>
             <View style={{ flex: 1 }}>
               <Text>{person.name}</Text>
-              <Text style={{ color: '#888' }}>{person.phone}</Text>
+              <View style={{ flexDirection: 'row', gap: 5 }}>
+                <Text style={{flex: 1, color: '#888' }}>{person.phone}</Text>
+                <Text style={styles.timestamp}>
+                  Cadastrado {timeAgo(new Date(person._creationTime))}
+                </Text>
+              </View>
               <View style={{ flexDirection: 'row', gap: 5 }}>
                 <Text style={{flex: 1, color: '#888' }}>{person.neighborhood}</Text>
                 <Text style={person.group?styles.celula:null}>{person.group?'Célula '+person.group!.name:null}</Text>
               </View>
-              <View style={{ flexDirection: 'row', gap: 5 }}>
-                <Text style={styles.timestamp}>
-                  {new Date(item._creationTime).toLocaleDateString()} {new Date(item._creationTime).toLocaleTimeString()} - {item.user}
-                </Text>
-              </View>
-              <View style={{ flexDirection: 'row', gap: 5 }}>
             </View>
           </TouchableOpacity>
         </Link>

@@ -110,7 +110,7 @@ const Page = () => {
         {/* Bottom message input */}
         <View style={styles.inputContainer}>
           <View style={{ flexDirection: 'row' }}>
-            <TextInput style={styles.textInput} value={newMessage} onChangeText={setNewMessage} placeholder="Type your message" multiline={true} />
+            <TextInput style={styles.textInput} value={newMessage} onChangeText={setNewMessage} placeholder="Digite sua message" multiline={true} />
 
             <TouchableOpacity style={styles.sendButton} onPress={handleSendMessage} disabled={newMessage === ''}>
               <Ionicons name="send-outline" style={styles.sendButtonText}></Ionicons>
