@@ -3,21 +3,24 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useSession } from './ctx'
 import { router } from 'expo-router'
+import { isLoading } from 'expo-font';
 
 const Page = () => {
   const [name, setName] = useState('');
   const [msg, setMsg] = useState('');
   const navigation = useNavigation();
-  const { signIn, session } = useSession();
+  const { signIn, isLoading, session } = useSession();
 
 
    // Safe the user name to async storage
   const setUser = async () => {
-    signIn(name);
-    if (!session) {
+    let result = signIn(name);
+
+    if (!result) {
         setMsg('Usuário não encontrado');
         return;
     }
+
 
     router.replace('/')
 

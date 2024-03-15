@@ -38,13 +38,15 @@ export function SessionProvider(props: React.PropsWithChildren) {
       value={{
         signIn: (name) => {
           const user = users.find((u) => u.name.toLowerCase() === name.toLowerCase()); 
-          if (user) {
-            delete user.password;
+          let userdata = {...user}; 
+          if (userdata) {
+            delete userdata.password 
           } else {
             return;
           }
-          const json = JSON.stringify(user);
+          const json = JSON.stringify(userdata);
           setSession(json);
+          return json
         },
         signOut: () => {
           setSession(null);
