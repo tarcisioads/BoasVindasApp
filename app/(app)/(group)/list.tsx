@@ -15,6 +15,7 @@ const Page = () => {
               <View style={{ flex: 1 }}>
                 <Text>{group.name}</Text>
                 <Text style={{ color: '#888' }}>{group.address}, {group.address_number} - {group.neighborhood}</Text>
+                <Text style={{ color: '#888' }}>{group.service_at}</Text>
               </View>
             </TouchableOpacity>
           </Link>
