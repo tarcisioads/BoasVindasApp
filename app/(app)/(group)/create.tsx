@@ -3,16 +3,13 @@ import React, { useState } from 'react';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useRouter } from 'expo-router';
-
- //    address: v.string(),
- //    address_number: v.string(),
- //    neighborhood: v.string(),
  
 const Page = () => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [address_number, setAddress_number] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
+  const [service_at, setService_at] = useState('');
   const startGroup = useMutation(api.groups.create);
   const router = useRouter();
 
@@ -23,6 +20,7 @@ const Page = () => {
       address: address,
       address_number: address_number,
       neighborhood: neighborhood,
+      service_at: service_at
     });
     router.back();
   };
@@ -37,6 +35,9 @@ const Page = () => {
       <TextInput style={styles.textInput} value={address_number} onChangeText={setAddress_number} />
       <Text style={styles.label}>Bairro</Text>
       <TextInput style={styles.textInput} value={neighborhood} onChangeText={setNeighborhood} />
+      <Text style={styles.label}>Dia / Horário</Text>
+      <TextInput style={styles.textInput} value={service_at} onChangeText={setService_at} />
+
 
 
       <TouchableOpacity style={styles.button} onPress={onCreateGroup}>

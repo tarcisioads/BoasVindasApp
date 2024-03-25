@@ -14,6 +14,7 @@ export default defineSchema({
     address: v.string(),
     address_number: v.string(),
     neighborhood: v.string(),
+    service_at: v.optional(v.string())
   }),
   persons: defineTable({
     modified_at: v.string(),

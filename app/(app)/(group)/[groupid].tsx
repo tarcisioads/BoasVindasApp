@@ -11,6 +11,7 @@ const Page = () => {
   const [address, setAddress] = useState('');
   const [address_number, setAddress_number] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
+  const [service_at, setService_at] = useState<string | undefined>('');
   const editGroup = useMutation(api.groups.edit);
   const router = useRouter();
   const convex = useConvex();
@@ -25,6 +26,7 @@ const Page = () => {
       setAddress(GroupInfo!.address);
       setAddress_number(GroupInfo!.address_number);
       setNeighborhood(GroupInfo!.neighborhood);
+      setService_at(GroupInfo!.service_at);
     };
     loadGroup();
   }, [groupid]);
@@ -38,6 +40,7 @@ const Page = () => {
       address: address,
       address_number: address_number,
       neighborhood: neighborhood,
+      service_at: service_at,
     });
     router.back();
   };
@@ -52,6 +55,9 @@ const Page = () => {
       <TextInput style={styles.textInput} value={address_number} onChangeText={setAddress_number} />
       <Text style={styles.label}>Bairro</Text>
       <TextInput style={styles.textInput} value={neighborhood} onChangeText={setNeighborhood} />
+      <Text style={styles.label}>Dia / Horário</Text>
+      <TextInput style={styles.textInput} value={service_at} onChangeText={setService_at} />
+
 
       <TouchableOpacity style={styles.button} onPress={onEditGroup}>
         <Text style={styles.buttonText}>Salvar</Text>
