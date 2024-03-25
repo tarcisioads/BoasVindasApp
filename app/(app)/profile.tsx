@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 import { Link } from 'expo-router'
-import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSession } from '../ctx'
 
@@ -12,6 +11,17 @@ const UserProfileScreen = () => {
   const handleLogout = async () => {
     signOut();
   };
+
+  // Load user from async storage
+  useEffect(() => {
+    const loadUser = async () => {
+      const json = JSON.parse(session || '{name: "Anonymous"}');
+      setUser(json);
+    };
+
+    loadUser();
+  }, []);
+
 
 
   return (
@@ -67,6 +77,7 @@ const styles = StyleSheet.create({
   },
   user: {
     fontSize: 24,
+    marginBottom: 20,
     fontWeight: 'bold',
   },
   menu: {

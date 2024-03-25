@@ -16,7 +16,9 @@ const Page = () => {
   const setUser = async () => {
     let result = signIn(name);
 
-    if (!result) {
+    result = JSON.parse(result || '{}')
+
+    if (!result || !result.name) {
         setMsg('Usuário não encontrado');
         return;
     }

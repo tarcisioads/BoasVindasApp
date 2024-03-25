@@ -16,7 +16,7 @@ const Page = () => {
   const listRef = useRef<FlatList>(null);
   const convex = useConvex();
   const navigation = useNavigation();
-  const { session, isLoading } = useSession();
+  const { session } = useSession();
   const archivePerson = useMutation(api.persons.archive);
   const router = useRouter();
   
